@@ -3,25 +3,26 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 	"regexp"
 	"strings"
 )
 
 const (
 	// Files
-	inputFileName  = "make.log"
-	outputFileName = "compile_commands.json"
+	inputDirectory  = "test/"
+	outputDirectory = "test/"
 
 	// Regex
-	sourceFileRegex = "([^\\s]+[.]c)"
-	fileNameRegex   = "\\w+[.]c"
-	directoryRegex  = "'.+'"
+	compilerRegexExpr = "cc|gcc|clang|riscv32-unknown-elf-gcc"
+	pathRegexExpr     = "([^\\s]+[.]c)"
+	fileRegexExpr     = "[a-zA-Z0-9_-]+[.]c"
 )
 
 type CompileCommand struct {
-	Directory  string
-	Command    string
-	File string
+	Directory string
+	Command   string
+	File      string
 }
 
 func (c CompileCommand) ToString() string {
@@ -47,54 +48,84 @@ func (c CompileCommand) ToString() string {
 }
 
 func main() {
-	// osArgs := os.Args
-	// for index, element := range osArgs {
-	// 	fmt.Printf("Argument %d: %s\n", index, element)
-	// }
-
-	// Read File
-	lines := readFile(inputFileName)
+	projectWorkingDirectory, err := os.Getwd()
+	if err != nil {
+		log.Fatalf("Could not get current working directory! %q\n", err)
+	}
 
 	// Regex
-	directoryRegex, err := regexp.Compile(directoryRegex)
+	compilerRegex, err := regexp.Compile(compilerRegexExpr)
 	if err != nil {
-		log.Fatalf("Could not compile directory regex! %q\n", err)
+		log.Fatalf("Could not compile 'compiler' regex! %q\n", err)
 	}
 
-	// sourceFileRegex, err := regexp.Compile(sourceFileRegex)
-	// if err != nil {
-	// 	log.Fatalf("Could not compile directory regex! %q\n", err)
-	// }
-
-	fileRegex, err := regexp.Compile(fileNameRegex)
+	pathRegex, err := regexp.Compile(pathRegexExpr)
 	if err != nil {
-		log.Fatalf("Could not compile directory regex! %q\n", err)
+		log.Fatalf("Could not compile 'path' regex! %q\n", err)
 	}
 
-	var compileCommands []CompileCommand
-	var command CompileCommand
+	fileRegex, err := regexp.Compile(fileRegexExpr)
+	if err != nil {
+		log.Fatalf("Could not compile 'file' regex! %q\n", err)
+	}
 
-	for _, line := range lines {
-		if strings.Contains(line, "directory") {
-			directory := strings.ReplaceAll(directoryRegex.FindString(line), "'", "")
-			fmt.Printf("(Directory) %s\n", directory)
+	entries, err := os.ReadDir(inputDirectory)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-			command.Directory = directory
-		}
+	for _, file := range entries {
+		inputFileName := inputDirectory + file.Name()
+		outputFileName := outputDirectory + strings.ReplaceAll(file.Name(), ".log", ".json")
 
-		if strings.Contains(line, ".c") {
-			// sourceFile := sourceFileRegex.FindString(line)
-			// fmt.Printf("(Source File) %s\n", sourceFile)
+		fmt.Printf("File Name: %s\n", file.Name())
+
+		// Read File
+		lines := readFile(inputFileName)
+
+		var compileCommands []CompileCommand
+		var command CompileCommand
+		var foundPaths []string
+
+		for _, line := range lines {
+			// Extract Data
+			compiler := compilerRegex.FindString(line)
+			path := pathRegex.FindString(line)
 			file := fileRegex.FindString(line)
-			fmt.Printf("(File) %s\n", file)
+			directory, _, _ := strings.Cut(path, file)
 
-			command.Command = line
-			command.File = file
-			compileCommands = append(compileCommands, command)
+			if strings.Compare(compiler, "") != 0 && strings.Compare(path, "") != 0 {
+				duplicatePath := false
+				for _, foundPath := range foundPaths {
+					if strings.Compare(foundPath, path) == 0 {
+						duplicatePath = true
+						break
+					}
+				}
+
+				if duplicatePath {
+					continue
+				}
+
+				// Debug Output
+				fmt.Println(line)
+				fmt.Printf("\t(Compiler) %s\n", compiler)
+				fmt.Printf("\t(Path) %s\n", path)
+				fmt.Printf("\t(Directory) %s\n", directory)
+				fmt.Printf("\t(File) %s\n", file)
+
+				// Create Command
+				command.Directory = projectWorkingDirectory + directory
+				command.Command = line
+				command.File = file
+
+				// Register Command & Record Path
+				compileCommands = append(compileCommands, command)
+				foundPaths = append(foundPaths, path)
+			}
 		}
 
+		// Write to compile_commands.json
+		writeFile(outputFileName, compileCommands)
 	}
-
-	// Write to compile_commands.json
-	writeFile(outputFileName, compileCommands)
 }

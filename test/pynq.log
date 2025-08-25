@@ -1,0 +1,478 @@
+make[1]: Entering directory '/home/student/group-20/project-3-data-parallel/tools'
+cc -Wall -Wextra -pedantic -O0 -g3 -std=c99 -I. -I../vep_0/libbsp/include  -L. -L../vep_0/libchannel/lib  channel_init.c  -lchannel-arm -lm -o channel_init
+cc -Wall -Wextra -pedantic -O0 -g3 -std=c99 -I. -I../vep_0/libbsp/include  -L. -L../vep_0/libchannel/lib  channel_dump.c  -lchannel-arm -lm -o channel_dump
+cc -Wall -Wextra -pedantic -O0 -g3 -std=c99 -I. -I../vep_0/libbsp/include  -L. -L../vep_0/libchannel/lib  channel_readall.c  -lchannel-arm -lm -o channel_readall
+cc -Wall -Wextra -pedantic -O0 -g3 -std=c99 -I. -I../vep_0/libbsp/include  -L. -L../vep_0/libchannel/lib  channel_cheap_bridge.c  -lchannel-arm -lm -o channel_cheap_bridge
+gcc -Wall -Wextra -pedantic -O0 -g3 -std=c99 -I. -I../vep_0/libbsp/include -L. -L../vep_0/libchannel/lib -o generate-json generate-json.c ../vep_0/libbsp/libsrc/platform.c -lchannel-arm -lm
+gcc -Wall -Wextra -O0 -g3 -I. -I../vep_0/libbsp/include -I../vep_0/libarmshared-arm/include -L. -o shared_mem_tool shared_mem_tool.c ../vep_0/libbsp/libsrc/platform.c ../vep_0/libarmshared-arm/libsrc/arm_shared_memory_system.c 
+make[1]: Leaving directory '/home/student/group-20/project-3-data-parallel/tools'
+make[1]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_1'
+make -C libimage
+make[2]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_1/libimage'
+lib/libimage_tile0_mb.a(libsrc/tile0_mb_greyscale.o libsrc/tile0_mb_sobel.o libsrc/tile0_mb_overlay.o libsrc/tile0_mb_scale.o libsrc/tile0_mb_convolution.o libsrc/tile0_mb_median.o )
+lib/libimage_tile1_mb.a(libsrc/tile1_mb_greyscale.o libsrc/tile1_mb_sobel.o libsrc/tile1_mb_overlay.o libsrc/tile1_mb_scale.o libsrc/tile1_mb_convolution.o libsrc/tile1_mb_median.o )
+lib/libimage_tile2_mb.a(libsrc/tile2_mb_greyscale.o libsrc/tile2_mb_sobel.o libsrc/tile2_mb_overlay.o libsrc/tile2_mb_scale.o libsrc/tile2_mb_convolution.o libsrc/tile2_mb_median.o )
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_greyscale.o  libsrc/greyscale.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_sobel.o  libsrc/sobel.c
+libsrc/sobel.c: In function 'overlay_sobel':
+libsrc/sobel.c:61:25: warning: passing argument 1 of 'memcpy' discards 'const volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   61 |     memcpy(frame_in_new + (y - 1) * xsize, frame_in + (y - 1) * xsize, xsize);
+      |            ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+In file included from libsrc/sobel.c:3:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'void * restrict' but argument is of type 'const volatile uint8_t *' {aka 'const volatile unsigned char *'}
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+libsrc/sobel.c:61:53: warning: passing argument 2 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   61 |     memcpy(frame_in_new + (y - 1) * xsize, frame_in + (y - 1) * xsize, xsize);
+      |                                            ~~~~~~~~~^~~~~~~~~~~~~~~~~
+In file included from libsrc/sobel.c:3:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'const void * restrict' but argument is of type 'const volatile uint8_t * const' {aka 'const volatile unsigned char * const'}
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+libsrc/sobel.c:65:81: warning: passing argument 6 of 'sobel' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   65 |     sobel(frame_in_new + y * xsize, xsize, 5, bitsperpixel, threshold, frame_in + y * xsize);
+      |                                                                        ~~~~~~~~~^~~~~~~~~~~
+libsrc/sobel.c:10:62: note: expected 'volatile uint8_t * const' {aka 'volatile unsigned char * const'} but argument is of type 'const volatile uint8_t * const' {aka 'const volatile unsigned char * const'}
+   10 |            uint8_t const threshold, uint8_t volatile * const frame_out)
+      |                                     ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+libsrc/sobel.c:66:132: warning: passing argument 12 of 'overlay' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   66 |     overlay(frame_in_new + y * xsize, xsize, 1, bitsperpixel_in, frame_in + y * xsize, xsize, 1, bitsperpixel, 0, 0, 0.7, frame_in + y * xsize);
+      |                                                                                                                           ~~~~~~~~~^~~~~~~~~~~
+In file included from libsrc/sobel.c:7:
+libsrc/../include/image.h:24:114: note: expected 'volatile uint8_t * const' {aka 'volatile unsigned char * const'} but argument is of type 'const volatile uint8_t * const' {aka 'const volatile unsigned char * const'}
+   24 |                     uint32_t const xoffset, uint32_t const yoffset, double const ratio, uint8_t volatile * const frame_out);
+      |                                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_overlay.o  libsrc/overlay.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_scale.o  libsrc/scale.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_convolution.o  libsrc/convolution.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_median.o  libsrc/median.c
+ar rvU lib/libimage_tile0_mb.a libsrc/tile0_mb_greyscale.o
+ar: creating lib/libimage_tile0_mb.a
+a - libsrc/tile0_mb_greyscale.o
+make[2]: Warning: File 'lib/libimage_tile0_mb.a' has modification time 5.7 s in the future
+ar rvU lib/libimage_tile0_mb.a libsrc/tile0_mb_sobel.o
+a - libsrc/tile0_mb_sobel.o
+ar rvU lib/libimage_tile0_mb.a libsrc/tile0_mb_overlay.o
+a - libsrc/tile0_mb_overlay.o
+ar rvU lib/libimage_tile0_mb.a libsrc/tile0_mb_scale.o
+a - libsrc/tile0_mb_scale.o
+ar rvU lib/libimage_tile0_mb.a libsrc/tile0_mb_convolution.o
+a - libsrc/tile0_mb_convolution.o
+ar rvU lib/libimage_tile0_mb.a libsrc/tile0_mb_median.o
+a - libsrc/tile0_mb_median.o
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile1_mb_greyscale.o  libsrc/greyscale.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile1_mb_sobel.o  libsrc/sobel.c
+libsrc/sobel.c: In function 'overlay_sobel':
+libsrc/sobel.c:61:25: warning: passing argument 1 of 'memcpy' discards 'const volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   61 |     memcpy(frame_in_new + (y - 1) * xsize, frame_in + (y - 1) * xsize, xsize);
+      |            ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+In file included from libsrc/sobel.c:3:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'void * restrict' but argument is of type 'const volatile uint8_t *' {aka 'const volatile unsigned char *'}
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+libsrc/sobel.c:61:53: warning: passing argument 2 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   61 |     memcpy(frame_in_new + (y - 1) * xsize, frame_in + (y - 1) * xsize, xsize);
+      |                                            ~~~~~~~~~^~~~~~~~~~~~~~~~~
+In file included from libsrc/sobel.c:3:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'const void * restrict' but argument is of type 'const volatile uint8_t * const' {aka 'const volatile unsigned char * const'}
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+libsrc/sobel.c:65:81: warning: passing argument 6 of 'sobel' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   65 |     sobel(frame_in_new + y * xsize, xsize, 5, bitsperpixel, threshold, frame_in + y * xsize);
+      |                                                                        ~~~~~~~~~^~~~~~~~~~~
+libsrc/sobel.c:10:62: note: expected 'volatile uint8_t * const' {aka 'volatile unsigned char * const'} but argument is of type 'const volatile uint8_t * const' {aka 'const volatile unsigned char * const'}
+   10 |            uint8_t const threshold, uint8_t volatile * const frame_out)
+      |                                     ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+libsrc/sobel.c:66:132: warning: passing argument 12 of 'overlay' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   66 |     overlay(frame_in_new + y * xsize, xsize, 1, bitsperpixel_in, frame_in + y * xsize, xsize, 1, bitsperpixel, 0, 0, 0.7, frame_in + y * xsize);
+      |                                                                                                                           ~~~~~~~~~^~~~~~~~~~~
+In file included from libsrc/sobel.c:7:
+libsrc/../include/image.h:24:114: note: expected 'volatile uint8_t * const' {aka 'volatile unsigned char * const'} but argument is of type 'const volatile uint8_t * const' {aka 'const volatile unsigned char * const'}
+   24 |                     uint32_t const xoffset, uint32_t const yoffset, double const ratio, uint8_t volatile * const frame_out);
+      |                                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile1_mb_overlay.o  libsrc/overlay.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile1_mb_scale.o  libsrc/scale.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile1_mb_convolution.o  libsrc/convolution.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile1_mb_median.o  libsrc/median.c
+ar rvU lib/libimage_tile1_mb.a libsrc/tile1_mb_greyscale.o
+ar: creating lib/libimage_tile1_mb.a
+a - libsrc/tile1_mb_greyscale.o
+ar rvU lib/libimage_tile1_mb.a libsrc/tile1_mb_sobel.o
+a - libsrc/tile1_mb_sobel.o
+ar rvU lib/libimage_tile1_mb.a libsrc/tile1_mb_overlay.o
+a - libsrc/tile1_mb_overlay.o
+ar rvU lib/libimage_tile1_mb.a libsrc/tile1_mb_scale.o
+a - libsrc/tile1_mb_scale.o
+ar rvU lib/libimage_tile1_mb.a libsrc/tile1_mb_convolution.o
+a - libsrc/tile1_mb_convolution.o
+ar rvU lib/libimage_tile1_mb.a libsrc/tile1_mb_median.o
+a - libsrc/tile1_mb_median.o
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile2_mb_greyscale.o  libsrc/greyscale.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile2_mb_sobel.o  libsrc/sobel.c
+libsrc/sobel.c: In function 'overlay_sobel':
+libsrc/sobel.c:61:25: warning: passing argument 1 of 'memcpy' discards 'const volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   61 |     memcpy(frame_in_new + (y - 1) * xsize, frame_in + (y - 1) * xsize, xsize);
+      |            ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+In file included from libsrc/sobel.c:3:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'void * restrict' but argument is of type 'const volatile uint8_t *' {aka 'const volatile unsigned char *'}
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+libsrc/sobel.c:61:53: warning: passing argument 2 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   61 |     memcpy(frame_in_new + (y - 1) * xsize, frame_in + (y - 1) * xsize, xsize);
+      |                                            ~~~~~~~~~^~~~~~~~~~~~~~~~~
+In file included from libsrc/sobel.c:3:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'const void * restrict' but argument is of type 'const volatile uint8_t * const' {aka 'const volatile unsigned char * const'}
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+libsrc/sobel.c:65:81: warning: passing argument 6 of 'sobel' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   65 |     sobel(frame_in_new + y * xsize, xsize, 5, bitsperpixel, threshold, frame_in + y * xsize);
+      |                                                                        ~~~~~~~~~^~~~~~~~~~~
+libsrc/sobel.c:10:62: note: expected 'volatile uint8_t * const' {aka 'volatile unsigned char * const'} but argument is of type 'const volatile uint8_t * const' {aka 'const volatile unsigned char * const'}
+   10 |            uint8_t const threshold, uint8_t volatile * const frame_out)
+      |                                     ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+libsrc/sobel.c:66:132: warning: passing argument 12 of 'overlay' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   66 |     overlay(frame_in_new + y * xsize, xsize, 1, bitsperpixel_in, frame_in + y * xsize, xsize, 1, bitsperpixel, 0, 0, 0.7, frame_in + y * xsize);
+      |                                                                                                                           ~~~~~~~~~^~~~~~~~~~~
+In file included from libsrc/sobel.c:7:
+libsrc/../include/image.h:24:114: note: expected 'volatile uint8_t * const' {aka 'volatile unsigned char * const'} but argument is of type 'const volatile uint8_t * const' {aka 'const volatile unsigned char * const'}
+   24 |                     uint32_t const xoffset, uint32_t const yoffset, double const ratio, uint8_t volatile * const frame_out);
+      |                                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile2_mb_overlay.o  libsrc/overlay.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile2_mb_scale.o  libsrc/scale.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile2_mb_convolution.o  libsrc/convolution.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile2_mb_median.o  libsrc/median.c
+ar rvU lib/libimage_tile2_mb.a libsrc/tile2_mb_greyscale.o
+ar: creating lib/libimage_tile2_mb.a
+a - libsrc/tile2_mb_greyscale.o
+ar rvU lib/libimage_tile2_mb.a libsrc/tile2_mb_sobel.o
+a - libsrc/tile2_mb_sobel.o
+ar rvU lib/libimage_tile2_mb.a libsrc/tile2_mb_overlay.o
+a - libsrc/tile2_mb_overlay.o
+ar rvU lib/libimage_tile2_mb.a libsrc/tile2_mb_scale.o
+a - libsrc/tile2_mb_scale.o
+ar rvU lib/libimage_tile2_mb.a libsrc/tile2_mb_convolution.o
+a - libsrc/tile2_mb_convolution.o
+ar rvU lib/libimage_tile2_mb.a libsrc/tile2_mb_median.o
+a - libsrc/tile2_mb_median.o
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+make[2]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_1/libimage'
+make -C libmymutex
+make[2]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_1/libmymutex'
+lib/libmymutex_tile0_mb.a(libsrc/tile0_mb_mymutex.o )
+lib/libmymutex_tile1_mb.a(libsrc/tile1_mb_mymutex.o )
+lib/libmymutex_tile2_mb.a(libsrc/tile2_mb_mymutex.o )
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_mymutex.o  libsrc/mymutex.c
+ar rvU lib/libmymutex_tile0_mb.a libsrc/tile0_mb_mymutex.o
+ar: creating lib/libmymutex_tile0_mb.a
+a - libsrc/tile0_mb_mymutex.o
+make[2]: Warning: File 'lib/libmymutex_tile0_mb.a' has modification time 5.7 s in the future
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile1_mb_mymutex.o  libsrc/mymutex.c
+ar rvU lib/libmymutex_tile1_mb.a libsrc/tile1_mb_mymutex.o
+ar: creating lib/libmymutex_tile1_mb.a
+a - libsrc/tile1_mb_mymutex.o
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile2_mb_mymutex.o  libsrc/mymutex.c
+ar rvU lib/libmymutex_tile2_mb.a libsrc/tile2_mb_mymutex.o
+ar: creating lib/libmymutex_tile2_mb.a
+a - libsrc/tile2_mb_mymutex.o
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+make[2]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_1/libmymutex'
+make -C partition_2_1
+make[2]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_1/partition_2_1'
+make -C ../../vep_0
+make[3]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_0'
+make[4]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_0/libbsp'
+lib/libbsp_tile0_mb.a(libsrc/tile0_mb_platform.o libsrc/tile0_mb_xil_printf.o libsrc/tile0_mb_vep_malloc.o libsrc/tile0_mb_output.o libsrc/tile0_mb_start.o)
+lib/libbsp_tile1_mb.a(libsrc/tile1_mb_platform.o libsrc/tile1_mb_xil_printf.o libsrc/tile1_mb_vep_malloc.o libsrc/tile1_mb_output.o libsrc/tile1_mb_start.o)
+lib/libbsp_tile2_mb.a(libsrc/tile2_mb_platform.o libsrc/tile2_mb_xil_printf.o libsrc/tile2_mb_vep_malloc.o libsrc/tile2_mb_output.o libsrc/tile2_mb_start.o)
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_platform.o  libsrc/platform.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_xil_printf.o  libsrc/xil_printf.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_vep_malloc.o  libsrc/vep_malloc.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_output.o  libsrc/output.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_start.o  libsrc/start.S
+ar rvU lib/libbsp_tile0_mb.a libsrc/tile0_mb_platform.o
+ar: creating lib/libbsp_tile0_mb.a
+a - libsrc/tile0_mb_platform.o
+make[4]: Warning: File 'lib/libbsp_tile0_mb.a' has modification time 5.7 s in the future
+ar rvU lib/libbsp_tile0_mb.a libsrc/tile0_mb_xil_printf.o
+a - libsrc/tile0_mb_xil_printf.o
+ar rvU lib/libbsp_tile0_mb.a libsrc/tile0_mb_vep_malloc.o
+a - libsrc/tile0_mb_vep_malloc.o
+ar rvU lib/libbsp_tile0_mb.a libsrc/tile0_mb_output.o
+a - libsrc/tile0_mb_output.o
+ar rvU lib/libbsp_tile0_mb.a libsrc/tile0_mb_start.o
+a - libsrc/tile0_mb_start.o
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile1_mb_platform.o  libsrc/platform.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile1_mb_xil_printf.o  libsrc/xil_printf.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile1_mb_vep_malloc.o  libsrc/vep_malloc.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile1_mb_output.o  libsrc/output.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile1_mb_start.o  libsrc/start.S
+ar rvU lib/libbsp_tile1_mb.a libsrc/tile1_mb_platform.o
+ar: creating lib/libbsp_tile1_mb.a
+a - libsrc/tile1_mb_platform.o
+ar rvU lib/libbsp_tile1_mb.a libsrc/tile1_mb_xil_printf.o
+a - libsrc/tile1_mb_xil_printf.o
+ar rvU lib/libbsp_tile1_mb.a libsrc/tile1_mb_vep_malloc.o
+a - libsrc/tile1_mb_vep_malloc.o
+ar rvU lib/libbsp_tile1_mb.a libsrc/tile1_mb_output.o
+a - libsrc/tile1_mb_output.o
+ar rvU lib/libbsp_tile1_mb.a libsrc/tile1_mb_start.o
+a - libsrc/tile1_mb_start.o
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile2_mb_platform.o  libsrc/platform.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile2_mb_xil_printf.o  libsrc/xil_printf.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile2_mb_vep_malloc.o  libsrc/vep_malloc.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile2_mb_output.o  libsrc/output.c
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile2_mb_start.o  libsrc/start.S
+ar rvU lib/libbsp_tile2_mb.a libsrc/tile2_mb_platform.o
+ar: creating lib/libbsp_tile2_mb.a
+a - libsrc/tile2_mb_platform.o
+ar rvU lib/libbsp_tile2_mb.a libsrc/tile2_mb_xil_printf.o
+a - libsrc/tile2_mb_xil_printf.o
+ar rvU lib/libbsp_tile2_mb.a libsrc/tile2_mb_vep_malloc.o
+a - libsrc/tile2_mb_vep_malloc.o
+ar rvU lib/libbsp_tile2_mb.a libsrc/tile2_mb_output.o
+a - libsrc/tile2_mb_output.o
+ar rvU lib/libbsp_tile2_mb.a libsrc/tile2_mb_start.o
+a - libsrc/tile2_mb_start.o
+make[4]: warning:  Clock skew detected.  Your build may be incomplete.
+make[4]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_0/libbsp'
+make[4]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_0/libarmshared-arm'
+make[4]: Nothing to be done for 'all'.
+make[4]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_0/libarmshared-arm'
+make[4]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_0/libfifo-arm'
+make[4]: Nothing to be done for 'all'.
+make[4]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_0/libfifo-arm'
+make[4]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_0/libfifo-riscv'
+make[4]: Nothing to be done for 'all'.
+make[4]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_0/libfifo-riscv'
+make[4]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_0/libmutex-arm'
+cc -DARM -I..//libbsp/include/ -I..//tiles -Iinclude/ -O2   -c -o libsrc/mutex.o libsrc/mutex.c
+ar rvU lib/libmutex-arm.a libsrc/mutex.o
+ar: creating lib/libmutex-arm.a
+a - libsrc/mutex.o
+make[4]: Warning: File 'lib/libmutex-arm.a' has modification time 5.7 s in the future
+make[4]: warning:  Clock skew detected.  Your build may be incomplete.
+rm libsrc/mutex.o
+make[4]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_0/libmutex-arm'
+make[4]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_0/libmutex-riscv'
+lib/libmutex-riscv_tile0_mb.a(libsrc/tile0_mb_mutex.o )
+lib/libmutex-riscv_tile1_mb.a(libsrc/tile1_mb_mutex.o )
+lib/libmutex-riscv_tile2_mb.a(libsrc/tile2_mb_mutex.o )
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_mutex.o  libsrc/mutex.c
+ar rvU lib/libmutex-riscv_tile0_mb.a libsrc/tile0_mb_mutex.o
+ar: creating lib/libmutex-riscv_tile0_mb.a
+a - libsrc/tile0_mb_mutex.o
+make[4]: Warning: File 'lib/libmutex-riscv_tile0_mb.a' has modification time 5.7 s in the future
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile1_mb_mutex.o  libsrc/mutex.c
+ar rvU lib/libmutex-riscv_tile1_mb.a libsrc/tile1_mb_mutex.o
+ar: creating lib/libmutex-riscv_tile1_mb.a
+a - libsrc/tile1_mb_mutex.o
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile2_mb_mutex.o  libsrc/mutex.c
+ar rvU lib/libmutex-riscv_tile2_mb.a libsrc/tile2_mb_mutex.o
+ar: creating lib/libmutex-riscv_tile2_mb.a
+a - libsrc/tile2_mb_mutex.o
+make[4]: warning:  Clock skew detected.  Your build may be incomplete.
+make[4]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_0/libmutex-riscv'
+make[3]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_0'
+make[2]: Warning: File '../../vep_0/libmutex-riscv/lib/libmutex-riscv_tile2_mb.a' has modification time 5.7 s in the future
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../libimage/include -I../libmymutex/include -I../shared_memories -I../shared -I../../vep_0/tiles -DVEP_ID=1 -DTILE_ID=2 -DPARTITION_ID=1 -I../../vep_0/libbsp/include/ -I../../vep_0/libchannel/include/ -I../../vep_0/libfifo-riscv/include/ -I../../vep_0/libmutex-riscv/include/ -MMD -MP main.c -c -o main.o
+main.c: In function 'read_token':
+main.c:19:21: warning: passing argument 2 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   19 |   memcpy(new_token, token, sizeof(token_t));
+      |                     ^~~~~
+In file included from ../../vep_0/libbsp/include/xil_printf.h:9,
+                 from main.c:10:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'const void * restrict' but argument is of type 'volatile void * const'
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+main.c: In function 'write_token':
+main.c:30:10: warning: passing argument 1 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   30 |   memcpy(space, token_to_write, sizeof(token_t));
+      |          ^~~~~
+In file included from ../../vep_0/libbsp/include/xil_printf.h:9,
+                 from main.c:10:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'void * restrict' but argument is of type 'volatile void * const'
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+make[2]: Warning: File 'main.d' has modification time 5.5 s in the future
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../libimage/include -I../libmymutex/include -I../shared_memories -I../shared -I../../vep_0/tiles -DVEP_ID=1 -DTILE_ID=2 -DPARTITION_ID=1 -I../../vep_0/libbsp/include/ -I../../vep_0/libchannel/include/ -I../../vep_0/libfifo-riscv/include/ -I../../vep_0/libmutex-riscv/include/ -Wl,-T -Wl,lscript.ld -o out.elf main.o ../shared_memories/vep_shared_memory_regions.c ../shared_memories/vep_memory_map.c \
+        -L../libimage/lib/ -limage_tile2_mb -L../libmymutex/lib/ -lmymutex_tile2_mb -lm\
+        -L../../vep_0/libbsp/lib/ -lbsp_tile2_mb -L../../vep_0/libchannel/lib/ -lchannel_tile2_mb -L../../vep_0/libfifo-riscv/lib/ -lfifo-riscv_tile2_mb -L../../vep_0/libmutex-riscv/lib/ -lmutex-riscv_tile2_mb
+/opt/riscv/bin/riscv32-unknown-elf-objcopy --remove-section='.publicmem' --remove-section='.mem*' -g -Obinary out.elf out.hex
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+make[2]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_1/partition_2_1'
+make -C partition_0_1
+make[2]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_1/partition_0_1'
+make[2]: Warning: File '../../vep_0/libmutex-riscv/lib/libmutex-riscv_tile0_mb.a' has modification time 2 s in the future
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../libimage/include -I../libmymutex/include -I../shared_memories -I../shared -I../../vep_0/tiles -DVEP_ID=1 -DTILE_ID=0 -DPARTITION_ID=1 -I../../vep_0/libbsp/include/ -I../../vep_0/libchannel/include/ -I../../vep_0/libfifo-riscv/include/ -I../../vep_0/libmutex-riscv/include/ -MMD -MP main.c -c -o main.o
+main.c: In function 'read_token':
+main.c:19:21: warning: passing argument 2 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   19 |   memcpy(new_token, token, sizeof(token_t));
+      |                     ^~~~~
+In file included from ../../vep_0/libbsp/include/xil_printf.h:9,
+                 from main.c:10:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'const void * restrict' but argument is of type 'volatile void * const'
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+main.c: In function 'write_token':
+main.c:30:10: warning: passing argument 1 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   30 |   memcpy(space, token_to_write, sizeof(token_t));
+      |          ^~~~~
+In file included from ../../vep_0/libbsp/include/xil_printf.h:9,
+                 from main.c:10:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'void * restrict' but argument is of type 'volatile void * const'
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+make[2]: Warning: File 'main.d' has modification time 5.5 s in the future
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../libimage/include -I../libmymutex/include -I../shared_memories -I../shared -I../../vep_0/tiles -DVEP_ID=1 -DTILE_ID=0 -DPARTITION_ID=1 -I../../vep_0/libbsp/include/ -I../../vep_0/libchannel/include/ -I../../vep_0/libfifo-riscv/include/ -I../../vep_0/libmutex-riscv/include/ -Wl,-T -Wl,lscript.ld -o out.elf main.o ../shared_memories/vep_shared_memory_regions.c ../shared_memories/vep_memory_map.c \
+        -L../libimage/lib/ -limage_tile0_mb -L../libmymutex/lib/ -lmymutex_tile0_mb -lm\
+        -L../../vep_0/libbsp/lib/ -lbsp_tile0_mb -L../../vep_0/libchannel/lib/ -lchannel_tile0_mb -L../../vep_0/libfifo-riscv/lib/ -lfifo-riscv_tile0_mb -L../../vep_0/libmutex-riscv/lib/ -lmutex-riscv_tile0_mb
+/opt/riscv/bin/riscv32-unknown-elf-objcopy --remove-section='.publicmem' --remove-section='.mem*' -g -Obinary out.elf out.hex
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+make[2]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_1/partition_0_1'
+make -C partition_1_1
+make[2]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_1/partition_1_1'
+make[2]: Warning: File '../../vep_0/libmutex-riscv/lib/libmutex-riscv_tile1_mb.a' has modification time 0.26 s in the future
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../libimage/include -I../libmymutex/include -I../shared_memories -I../shared -I../../vep_0/tiles -DVEP_ID=1 -DTILE_ID=1 -DPARTITION_ID=1 -I../../vep_0/libbsp/include/ -I../../vep_0/libchannel/include/ -I../../vep_0/libfifo-riscv/include/ -I../../vep_0/libmutex-riscv/include/ -MMD -MP main.c -c -o main.o
+main.c: In function 'read_token':
+main.c:19:21: warning: passing argument 2 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   19 |   memcpy(new_token, token, sizeof(token_t));
+      |                     ^~~~~
+In file included from ../../vep_0/libbsp/include/xil_printf.h:9,
+                 from main.c:10:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'const void * restrict' but argument is of type 'volatile void * const'
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+main.c: In function 'write_token':
+main.c:30:10: warning: passing argument 1 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   30 |   memcpy(space, token_to_write, sizeof(token_t));
+      |          ^~~~~
+In file included from ../../vep_0/libbsp/include/xil_printf.h:9,
+                 from main.c:10:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'void * restrict' but argument is of type 'volatile void * const'
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+make[2]: Warning: File 'main.d' has modification time 5.5 s in the future
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../libimage/include -I../libmymutex/include -I../shared_memories -I../shared -I../../vep_0/tiles -DVEP_ID=1 -DTILE_ID=1 -DPARTITION_ID=1 -I../../vep_0/libbsp/include/ -I../../vep_0/libchannel/include/ -I../../vep_0/libfifo-riscv/include/ -I../../vep_0/libmutex-riscv/include/ -Wl,-T -Wl,lscript.ld -o out.elf main.o ../shared_memories/vep_shared_memory_regions.c ../shared_memories/vep_memory_map.c \
+        -L../libimage/lib/ -limage_tile1_mb -L../libmymutex/lib/ -lmymutex_tile1_mb -lm\
+        -L../../vep_0/libbsp/lib/ -lbsp_tile1_mb -L../../vep_0/libchannel/lib/ -lchannel_tile1_mb -L../../vep_0/libfifo-riscv/lib/ -lfifo-riscv_tile1_mb -L../../vep_0/libmutex-riscv/lib/ -lmutex-riscv_tile1_mb
+/opt/riscv/bin/riscv32-unknown-elf-objcopy --remove-section='.publicmem' --remove-section='.mem*' -g -Obinary out.elf out.hex
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+make[2]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_1/partition_1_1'
+make -C partition_2_2
+make[2]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_1/partition_2_2'
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../libimage/include -I../libmymutex/include -I../shared_memories -I../shared -I../../vep_0/tiles -DVEP_ID=1 -DTILE_ID=2 -DPARTITION_ID=2 -I../../vep_0/libbsp/include/ -I../../vep_0/libchannel/include/ -I../../vep_0/libfifo-riscv/include/ -I../../vep_0/libmutex-riscv/include/ -MMD -MP main.c -c -o main.o
+main.c: In function 'read_token':
+main.c:19:21: warning: passing argument 2 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   19 |   memcpy(new_token, token, sizeof(token_t));
+      |                     ^~~~~
+In file included from ../../vep_0/libbsp/include/xil_printf.h:9,
+                 from main.c:10:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'const void * restrict' but argument is of type 'volatile void * const'
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+main.c: In function 'write_token':
+main.c:30:10: warning: passing argument 1 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   30 |   memcpy(space, token_to_write, sizeof(token_t));
+      |          ^~~~~
+In file included from ../../vep_0/libbsp/include/xil_printf.h:9,
+                 from main.c:10:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'void * restrict' but argument is of type 'volatile void * const'
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+make[2]: Warning: File 'main.d' has modification time 5.5 s in the future
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../libimage/include -I../libmymutex/include -I../shared_memories -I../shared -I../../vep_0/tiles -DVEP_ID=1 -DTILE_ID=2 -DPARTITION_ID=2 -I../../vep_0/libbsp/include/ -I../../vep_0/libchannel/include/ -I../../vep_0/libfifo-riscv/include/ -I../../vep_0/libmutex-riscv/include/ -Wl,-T -Wl,lscript.ld -o out.elf main.o ../shared_memories/vep_shared_memory_regions.c ../shared_memories/vep_memory_map.c \
+        -L../libimage/lib/ -limage_tile2_mb -L../libmymutex/lib/ -lmymutex_tile2_mb -lm\
+        -L../../vep_0/libbsp/lib/ -lbsp_tile2_mb -L../../vep_0/libchannel/lib/ -lchannel_tile2_mb -L../../vep_0/libfifo-riscv/lib/ -lfifo-riscv_tile2_mb -L../../vep_0/libmutex-riscv/lib/ -lmutex-riscv_tile2_mb
+/opt/riscv/bin/riscv32-unknown-elf-objcopy --remove-section='.publicmem' --remove-section='.mem*' -g -Obinary out.elf out.hex
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+make[2]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_1/partition_2_2'
+make -C partition_0_2
+make[2]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_1/partition_0_2'
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../libimage/include -I../libmymutex/include -I../shared_memories -I../shared -I../../vep_0/tiles -DVEP_ID=1 -DTILE_ID=0 -DPARTITION_ID=2 -I../../vep_0/libbsp/include/ -I../../vep_0/libchannel/include/ -I../../vep_0/libfifo-riscv/include/ -I../../vep_0/libmutex-riscv/include/ -MMD -MP main.c -c -o main.o
+main.c: In function 'read_token':
+main.c:19:21: warning: passing argument 2 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   19 |   memcpy(new_token, token, sizeof(token_t));
+      |                     ^~~~~
+In file included from ../../vep_0/libbsp/include/xil_printf.h:9,
+                 from main.c:10:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'const void * restrict' but argument is of type 'volatile void * const'
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+main.c: In function 'write_token':
+main.c:30:10: warning: passing argument 1 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   30 |   memcpy(space, token_to_write, sizeof(token_t));
+      |          ^~~~~
+In file included from ../../vep_0/libbsp/include/xil_printf.h:9,
+                 from main.c:10:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'void * restrict' but argument is of type 'volatile void * const'
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+make[2]: Warning: File 'main.d' has modification time 5.5 s in the future
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../libimage/include -I../libmymutex/include -I../shared_memories -I../shared -I../../vep_0/tiles -DVEP_ID=1 -DTILE_ID=0 -DPARTITION_ID=2 -I../../vep_0/libbsp/include/ -I../../vep_0/libchannel/include/ -I../../vep_0/libfifo-riscv/include/ -I../../vep_0/libmutex-riscv/include/ -Wl,-T -Wl,lscript.ld -o out.elf main.o ../shared_memories/vep_shared_memory_regions.c ../shared_memories/vep_memory_map.c \
+        -L../libimage/lib/ -limage_tile0_mb -L../libmymutex/lib/ -lmymutex_tile0_mb -lm\
+        -L../../vep_0/libbsp/lib/ -lbsp_tile0_mb -L../../vep_0/libchannel/lib/ -lchannel_tile0_mb -L../../vep_0/libfifo-riscv/lib/ -lfifo-riscv_tile0_mb -L../../vep_0/libmutex-riscv/lib/ -lmutex-riscv_tile0_mb
+/opt/riscv/bin/riscv32-unknown-elf-objcopy --remove-section='.publicmem' --remove-section='.mem*' -g -Obinary out.elf out.hex
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+make[2]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_1/partition_0_2'
+make -C partition_1_2
+make[2]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_1/partition_1_2'
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../libimage/include -I../libmymutex/include -I../shared_memories -I../shared -I../../vep_0/tiles -DVEP_ID=1 -DTILE_ID=1 -DPARTITION_ID=2 -I../../vep_0/libbsp/include/ -I../../vep_0/libchannel/include/ -I../../vep_0/libfifo-riscv/include/ -I../../vep_0/libmutex-riscv/include/ -MMD -MP main.c -c -o main.o
+main.c: In function 'read_token':
+main.c:19:21: warning: passing argument 2 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   19 |   memcpy(new_token, token, sizeof(token_t));
+      |                     ^~~~~
+In file included from ../../vep_0/libbsp/include/xil_printf.h:9,
+                 from main.c:10:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'const void * restrict' but argument is of type 'volatile void * const'
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+main.c: In function 'write_token':
+main.c:30:10: warning: passing argument 1 of 'memcpy' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   30 |   memcpy(space, token_to_write, sizeof(token_t));
+      |          ^~~~~
+In file included from ../../vep_0/libbsp/include/xil_printf.h:9,
+                 from main.c:10:
+/opt/riscv/riscv32-unknown-elf/include/string.h:31:9: note: expected 'void * restrict' but argument is of type 'volatile void * const'
+   31 | void *  memcpy (void *__restrict, const void *__restrict, size_t);
+      |         ^~~~~~
+make[2]: Warning: File 'main.d' has modification time 5.5 s in the future
+/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../libimage/include -I../libmymutex/include -I../shared_memories -I../shared -I../../vep_0/tiles -DVEP_ID=1 -DTILE_ID=1 -DPARTITION_ID=2 -I../../vep_0/libbsp/include/ -I../../vep_0/libchannel/include/ -I../../vep_0/libfifo-riscv/include/ -I../../vep_0/libmutex-riscv/include/ -Wl,-T -Wl,lscript.ld -o out.elf main.o ../shared_memories/vep_shared_memory_regions.c ../shared_memories/vep_memory_map.c \
+        -L../libimage/lib/ -limage_tile1_mb -L../libmymutex/lib/ -lmymutex_tile1_mb -lm\
+        -L../../vep_0/libbsp/lib/ -lbsp_tile1_mb -L../../vep_0/libchannel/lib/ -lchannel_tile1_mb -L../../vep_0/libfifo-riscv/lib/ -lfifo-riscv_tile1_mb -L../../vep_0/libmutex-riscv/lib/ -lmutex-riscv_tile1_mb
+/opt/riscv/bin/riscv32-unknown-elf-objcopy --remove-section='.publicmem' --remove-section='.mem*' -g -Obinary out.elf out.hex
+make[2]: warning:  Clock skew detected.  Your build may be incomplete.
+make[2]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_1/partition_1_2'
+make -C arm_img_proc
+make[2]: Entering directory '/home/student/group-20/project-3-data-parallel/vep_1/arm_img_proc'
+gcc -Wall -Wextra -O2 -g3 -I.  -DARM -DVEP_ID=1  -I../../vep_0/libbsp/include -I../../vep_0/libchannel/include -I../../vep_0/libarmshared-arm/include -I../../vep_0/libfifo-arm/include -I../../vep_0/libmutex-arm/include -I../shared_memories -I../shared arm_img_proc.c -c -o arm_img_proc.o
+arm_img_proc.c: In function ‘read_token’:
+arm_img_proc.c:25:21: warning: passing argument 2 of ‘memcpy’ discards ‘volatile’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+   memcpy(new_token, &memory->buffer_riscv[token], sizeof(token_t));
+                     ^
+In file included from /usr/include/features.h:424:0,
+                 from /usr/include/arm-linux-gnueabihf/bits/libc-header-start.h:33,
+                 from /usr/include/stdint.h:26,
+                 from /usr/lib/gcc/arm-linux-gnueabihf/7/include/stdint.h:9,
+                 from ../../vep_0/libarmshared-arm/include/arm_shared_memory.h:4,
+                 from arm_img_proc.c:1:
+/usr/include/arm-linux-gnueabihf/bits/string_fortified.h:31:1: note: expected ‘const void * restrict’ but argument is of type ‘volatile token_t * {aka volatile struct _token_t *}’
+ __NTH (memcpy (void *__restrict __dest, const void *__restrict __src,
+ ^
+arm_img_proc.c: In function ‘write_token’:
+arm_img_proc.c:36:10: warning: passing argument 1 of ‘memcpy’ discards ‘volatile’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+   memcpy(&memory->buffer_arm[space], token_to_write, sizeof(token_t));
+          ^
+In file included from /usr/include/features.h:424:0,
+                 from /usr/include/arm-linux-gnueabihf/bits/libc-header-start.h:33,
+                 from /usr/include/stdint.h:26,
+                 from /usr/lib/gcc/arm-linux-gnueabihf/7/include/stdint.h:9,
+                 from ../../vep_0/libarmshared-arm/include/arm_shared_memory.h:4,
+                 from arm_img_proc.c:1:
+/usr/include/arm-linux-gnueabihf/bits/string_fortified.h:31:1: note: expected ‘void * restrict’ but argument is of type ‘volatile token_t * {aka volatile struct _token_t *}’
+ __NTH (memcpy (void *__restrict __dest, const void *__restrict __src,
+ ^
+gcc -Wall -Wextra -O2 -g3 -I.  -DARM -DVEP_ID=1  -I../../vep_0/libbsp/include -I../../vep_0/libchannel/include -I../../vep_0/libarmshared-arm/include -I../../vep_0/libfifo-arm/include -I../../vep_0/libmutex-arm/include -I../shared_memories -I../shared readbmp.c -c -o readbmp.o
+gcc -Wall -Wextra -O2 -g3 -I.  -DARM -DVEP_ID=1  -I../../vep_0/libbsp/include -I../../vep_0/libchannel/include -I../../vep_0/libarmshared-arm/include -I../../vep_0/libfifo-arm/include -I../../vep_0/libmutex-arm/include -I../shared_memories -I../shared writebmp.c -c -o writebmp.o
+gcc -Wall -Wextra -O2 -g3 -I.  -DARM -DVEP_ID=1  -I../../vep_0/libbsp/include -I../../vep_0/libchannel/include -I../../vep_0/libarmshared-arm/include -I../../vep_0/libfifo-arm/include -I../../vep_0/libmutex-arm/include -I../shared_memories -I../shared -o arm_img_proc arm_img_proc.o readbmp.o writebmp.o -L../../vep_0/libchannel/lib -L../../vep_0/libfifo-arm/lib -L../../vep_0/libmutex-arm/lib -lchannel-arm -lfifo-arm -lmutex-arm  ../../vep_0/libbsp/libsrc/platform.c ../../vep_0/libarmshared-arm/libsrc/arm_shared_memory_system.c ../../vep_0/libarmshared-arm/libsrc/arm_shared_memory.c ../../vep_0/libfifo-arm/lib/libfifo-arm.a ../../vep_0/libmutex-arm/lib/libmutex-arm.a ../shared_memories/vep_shared_memory_regions.c ../shared_memories/vep_memory_map.c
+make[2]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_1/arm_img_proc'
+make[1]: Leaving directory '/home/student/group-20/project-3-data-parallel/vep_1'

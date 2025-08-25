@@ -1,0 +1,27 @@
+gcc -c -o build/cpu.o src/cpu.c -Wall -Wextra -Wformat -O3 -I inc/
+src/cpu.c: In function ‘cpu_execute_regular’:
+src/cpu.c:32:13: warning: unused variable ‘opcode’ [-Wunused-variable]
+   32 |     uint8_t opcode = instr.opcode;
+      |             ^~~~~~
+src/cpu.c: In function ‘cpu_execute_syscall’:
+src/cpu.c:205:9: warning: ignoring return value of ‘scanf’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  205 |         scanf("%d", &cpu->reg[REG_V0]);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from src/cpu.c:5:
+src/memory.h: At top level:
+src/memory.h:16:16: warning: ‘memory’ defined but not used [-Wunused-variable]
+   16 | static uint8_t memory[MEMORY_SIZE] = {};
+      |                ^~~~~~
+gcc -c -o build/debug.o src/debug.c -Wall -Wextra -Wformat -O3 -I inc/
+src/debug.c: In function ‘print_debug_instruction’:
+src/debug.c:20:37: warning: unused parameter ‘cpu’ [-Wunused-parameter]
+   20 | void print_debug_instruction(cpu_t* cpu, uint32_t address, uint32_t instr, instr_type_t type) {
+      |                              ~~~~~~~^~~
+gcc -c -o build/instruction.o src/instruction.c -Wall -Wextra -Wformat -O3 -I inc/
+gcc -c -o build/main.o src/main.c -Wall -Wextra -Wformat -O3 -I inc/
+In file included from src/main.c:3:
+src/memory.h:16:16: warning: ‘memory’ defined but not used [-Wunused-variable]
+   16 | static uint8_t memory[MEMORY_SIZE] = {};
+      |                ^~~~~~
+gcc -c -o build/memory.o src/memory.c -Wall -Wextra -Wformat -O3 -I inc/
+gcc -o build/emulator build/cpu.o build/debug.o build/instruction.o build/main.o build/memory.o
