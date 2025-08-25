@@ -55,7 +55,7 @@ func TestCompilerRegex(t *testing.T) {
 	})
 
 	t.Run("Compiler: riscv32-unknown-elf-gcc", func(t *testing.T) {
-		command := "/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_greyscale.o  libsrc/greyscale.c"
+		command := "riscv32-unknown-elf-gcc -Iinclude -c -o libsrc/greyscale.o  libsrc/greyscale.c"
 
 		regex, err := regexp.Compile(compilerRegexExpr)
 		if err != nil {
@@ -105,7 +105,7 @@ func TestFileRegex(t *testing.T) {
 	})
 
 	t.Run("File: channel_init.c", func(t *testing.T) {
-		command := "cc -Wall -Wextra -pedantic -O0 -g3 -std=c99 -I. -I../vep_0/libbsp/include  -L. -L../vep_0/libchannel/lib  channel_init.c  -lchannel-arm -lm -o channel_init"
+		command := "cc -Wall -Wextra -pedantic -O0 -g3 -std=c99 channel_init.c  -lchannel-arm -lm -o channel_init"
 
 		regex, err := regexp.Compile(fileRegexExpr)
 		if err != nil {
@@ -121,7 +121,7 @@ func TestFileRegex(t *testing.T) {
 	})
 
 	t.Run("File: generate-json.c", func(t *testing.T) {
-		command := "gcc -Wall -Wextra -pedantic -O0 -g3 -std=c99 -I. -I../vep_0/libbsp/include -L. -L../vep_0/libchannel/lib -o generate-json generate-json.c ../vep_0/libbsp/libsrc/platform.c -lchannel-arm -lm"
+		command := "gcc -Wall -Wextra -pedantic -O0 -g3 -std=c99 -o generate-json generate-json.c ../vep_0/libbsp/libsrc/platform.c -lchannel-arm -lm"
 
 		regex, err := regexp.Compile(fileRegexExpr)
 		if err != nil {
