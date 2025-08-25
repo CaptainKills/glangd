@@ -42,5 +42,5 @@ func writeFile(fileName string, commands []CompileCommand) {
 		outputFile.WriteString(cmd.ToString())
 	}
 
-	outputFile.WriteString("\n]")
+	outputFile.WriteString("\n]\n")
 }
