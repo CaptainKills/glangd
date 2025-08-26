@@ -1,31 +1,32 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
-	"regexp"
 	"strings"
 )
 
-const (
-	// Files
-	inputDirectory  = "test/"
-	outputDirectory = "test/"
-
-	// Regex
-	compilerRegexExpr = "cc|gcc|clang|riscv32-unknown-elf-gcc"
-	pathRegexExpr     = "([^\\s]+[.]c)"
-	fileRegexExpr     = "[a-zA-Z0-9_-]+[.]c"
+var (
+	ProjectWorkingDirectory string
+	DebugEnabled            bool
+	inputPath               string
+	outputPath              string
 )
 
 type CompileCommand struct {
+	// JSON Information
 	Directory string
 	Command   string
 	File      string
+
+	// Additional Info
+	Compiler string
+	Path     string
 }
 
-func (c CompileCommand) ToString() string {
+func (c CompileCommand) ToJson() string {
 	var builder strings.Builder
 
 	builder.WriteString("\t{\n")
@@ -48,84 +49,58 @@ func (c CompileCommand) ToString() string {
 }
 
 func main() {
-	projectWorkingDirectory, err := os.Getwd()
+	// Initial Configuration
+	ProjectWorkingDirectory, err := os.Getwd()
 	if err != nil {
 		log.Fatalf("Could not get current working directory! %q\n", err)
 	}
 
-	// Regex
-	compilerRegex, err := regexp.Compile(compilerRegexExpr)
-	if err != nil {
-		log.Fatalf("Could not compile 'compiler' regex! %q\n", err)
+	InitRegex()
+
+	// Program Flags
+	flag.StringVar(&inputPath, "f", "", "Specify input file path")
+	flag.StringVar(&outputPath, "o", "", "Specify output file path")
+	flag.BoolVar(&DebugEnabled, "d", false, "Enable/Disable Debug Information")
+	flag.Parse()
+
+	fmt.Println(ProjectWorkingDirectory)
+	fmt.Printf("Input Path: %s\n", inputPath)
+	fmt.Printf("Output Path: %s\n", outputPath)
+	fmt.Printf("Debug Enabled: %t\n", DebugEnabled)
+
+	// Handle -o
+	if outputPath == "" {
+		// Use $PWD/compile_commands.json as output
+	} else {
+		// Check if path is actually a path to a file/folder
+		// if folder, output to folder/compile_commands.json
+		// if file, output to folder/file
 	}
 
-	pathRegex, err := regexp.Compile(pathRegexExpr)
-	if err != nil {
-		log.Fatalf("Could not compile 'path' regex! %q\n", err)
+	// Handle -f
+	if inputPath == "" {
+		// Use stdin as input
+	} else {
+		// Check if path is actually a path to a file
+		// Run glangd for a specific file
 	}
 
-	fileRegex, err := regexp.Compile(fileRegexExpr)
-	if err != nil {
-		log.Fatalf("Could not compile 'file' regex! %q\n", err)
-	}
-
-	entries, err := os.ReadDir(inputDirectory)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	for _, file := range entries {
-		inputFileName := inputDirectory + file.Name()
-		outputFileName := outputDirectory + strings.ReplaceAll(file.Name(), ".log", ".json")
-
-		fmt.Printf("File Name: %s\n", file.Name())
-
-		// Read File
-		lines := readFile(inputFileName)
-
-		var compileCommands []CompileCommand
-		var command CompileCommand
-		var foundPaths []string
-
-		for _, line := range lines {
-			// Extract Data
-			compiler := compilerRegex.FindString(line)
-			path := pathRegex.FindString(line)
-			file := fileRegex.FindString(line)
-			directory, _, _ := strings.Cut(path, file)
-
-			if strings.Compare(compiler, "") != 0 && strings.Compare(path, "") != 0 {
-				duplicatePath := false
-				for _, foundPath := range foundPaths {
-					if strings.Compare(foundPath, path) == 0 {
-						duplicatePath = true
-						break
-					}
-				}
-
-				if duplicatePath {
-					continue
-				}
-
-				// Debug Output
-				fmt.Println(line)
-				fmt.Printf("\t(Compiler) %s\n", compiler)
-				fmt.Printf("\t(Path) %s\n", path)
-				fmt.Printf("\t(Directory) %s\n", directory)
-				fmt.Printf("\t(File) %s\n", file)
-
-				// Create Command
-				command.Directory = projectWorkingDirectory + directory
-				command.Command = line
-				command.File = file
-
-				// Register Command & Record Path
-				compileCommands = append(compileCommands, command)
-				foundPaths = append(foundPaths, path)
-			}
-		}
-
-		// Write to compile_commands.json
-		writeFile(outputFileName, compileCommands)
-	}
+	// Main Program
+	// entries, err := os.ReadDir(inputPath)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	//
+	// for _, file := range entries {
+	// 	inputFilePath := inputPath + file.Name()
+	// 	outputFilePath := outputPath + strings.ReplaceAll(file.Name(), ".log", ".json")
+	//
+	// 	if strings.HasSuffix(inputFilePath, ".log") {
+	// 		fmt.Printf("File Name: %s\n", inputFilePath)
+	// 		compileCommands := ParseFile(inputFilePath)
+	//
+	// 		// Write to compile_commands.json
+	// 		writeFile(outputFilePath, compileCommands)
+	// 	}
+	// }
 }

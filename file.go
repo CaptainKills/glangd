@@ -39,7 +39,7 @@ func writeFile(fileName string, commands []CompileCommand) {
 		if index > 0 {
 			outputFile.WriteString(",\n")
 		}
-		outputFile.WriteString(cmd.ToString())
+		outputFile.WriteString(cmd.ToJson())
 	}
 
 	outputFile.WriteString("\n]\n")
