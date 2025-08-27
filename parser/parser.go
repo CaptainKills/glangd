@@ -1,12 +1,16 @@
-package main
+package parser
 
 import (
 	"fmt"
 	"strings"
+
+	cmd "github.com/CaptainKills/glangd/cmd"
+	file "github.com/CaptainKills/glangd/file"
+	regex "github.com/CaptainKills/glangd/regex"
 )
 
-func ParseStdin(stdin []string) []CompileCommand {
-	var commands []CompileCommand
+func ParseStdin(stdin []string, debug bool) []cmd.CompileCommand {
+	var commands []cmd.CompileCommand
 	var foundPaths []string
 
 	for _, line := range stdin {
@@ -27,7 +31,7 @@ func ParseStdin(stdin []string) []CompileCommand {
 			}
 
 			// Debug Output
-			if DebugEnabled {
+			if debug {
 				fmt.Println(line)
 				fmt.Printf("\t(Compiler) %s\n", cmd.Compiler)
 				fmt.Printf("\t(Path) %s\n", cmd.Path)
@@ -44,11 +48,11 @@ func ParseStdin(stdin []string) []CompileCommand {
 	return commands
 }
 
-func ParseFile(file string) []CompileCommand {
-	var commands []CompileCommand
+func ParseFile(f string, debug bool) []cmd.CompileCommand {
+	var commands []cmd.CompileCommand
 	var foundPaths []string
 
-	lines := readFile(file)
+	lines := file.ReadFile(f)
 
 	for _, line := range lines {
 		cmd := parseLine(line)
@@ -68,7 +72,7 @@ func ParseFile(file string) []CompileCommand {
 			}
 
 			// Debug Output
-			if DebugEnabled {
+			if debug {
 				fmt.Println(line)
 				fmt.Printf("\t(Compiler) %s\n", cmd.Compiler)
 				fmt.Printf("\t(Path) %s\n", cmd.Path)
@@ -85,12 +89,12 @@ func ParseFile(file string) []CompileCommand {
 	return commands
 }
 
-func parseLine(line string) (c CompileCommand) {
-	var cmd CompileCommand
+func parseLine(line string) (c cmd.CompileCommand) {
+	var cmd cmd.CompileCommand
 
-	compiler := CompilerRegex.FindString(line)
-	path := PathRegex.FindString(line)
-	file := FileRegex.FindString(line)
+	compiler := regex.CompilerRegex.FindString(line)
+	path := regex.PathRegex.FindString(line)
+	file := regex.FileRegex.FindString(line)
 	directory, _, _ := strings.Cut(path, file)
 
 	cmd.Directory = directory

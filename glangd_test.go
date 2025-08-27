@@ -2,10 +2,12 @@ package main
 
 import (
 	"testing"
+
+	cmd "github.com/CaptainKills/glangd/cmd"
 )
 
 func TestCommandToJson(t *testing.T) {
-	var cmd CompileCommand
+	var cmd cmd.CompileCommand
 
 	cmd.Command = "gcc main.c"
 	cmd.Directory = "/home/programmer/project-x/"

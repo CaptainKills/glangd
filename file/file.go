@@ -1,12 +1,14 @@
-package main
+package file
 
 import (
 	"bufio"
 	"log"
 	"os"
+
+	cmd "github.com/CaptainKills/glangd/cmd"
 )
 
-func readFile(fileName string) []string {
+func ReadFile(fileName string) []string {
 	inputFile, err := os.Open(fileName)
 	if err != nil {
 		log.Fatalf("Could not read file %s! %q\n", fileName, err)
@@ -26,7 +28,7 @@ func readFile(fileName string) []string {
 	return lines
 }
 
-func writeFile(fileName string, commands []CompileCommand) {
+func WriteFile(fileName string, commands []cmd.CompileCommand) {
 	outputFile, err := os.Create(fileName)
 	if err != nil {
 		log.Fatalf("Could not create file! %q\n", err)
