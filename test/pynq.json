@@ -1,0 +1,122 @@
+[
+	{
+		"directory": "",
+		"command": "cc -Wall -Wextra -pedantic -O0 -g3 -std=c99 -I. -I../vep_0/libbsp/include  -L. -L../vep_0/libchannel/lib  channel_init.c  -lchannel-arm -lm -o channel_init",
+		"file": "channel_init.c"
+	},
+	{
+		"directory": "",
+		"command": "cc -Wall -Wextra -pedantic -O0 -g3 -std=c99 -I. -I../vep_0/libbsp/include  -L. -L../vep_0/libchannel/lib  channel_dump.c  -lchannel-arm -lm -o channel_dump",
+		"file": "channel_dump.c"
+	},
+	{
+		"directory": "",
+		"command": "cc -Wall -Wextra -pedantic -O0 -g3 -std=c99 -I. -I../vep_0/libbsp/include  -L. -L../vep_0/libchannel/lib  channel_readall.c  -lchannel-arm -lm -o channel_readall",
+		"file": "channel_readall.c"
+	},
+	{
+		"directory": "",
+		"command": "cc -Wall -Wextra -pedantic -O0 -g3 -std=c99 -I. -I../vep_0/libbsp/include  -L. -L../vep_0/libchannel/lib  channel_cheap_bridge.c  -lchannel-arm -lm -o channel_cheap_bridge",
+		"file": "channel_cheap_bridge.c"
+	},
+	{
+		"directory": "",
+		"command": "gcc -Wall -Wextra -pedantic -O0 -g3 -std=c99 -I. -I../vep_0/libbsp/include -L. -L../vep_0/libchannel/lib -o generate-json generate-json.c ../vep_0/libbsp/libsrc/platform.c -lchannel-arm -lm",
+		"file": "generate-json.c"
+	},
+	{
+		"directory": "",
+		"command": "gcc -Wall -Wextra -O0 -g3 -I. -I../vep_0/libbsp/include -I../vep_0/libarmshared-arm/include -L. -o shared_mem_tool shared_mem_tool.c ../vep_0/libbsp/libsrc/platform.c ../vep_0/libarmshared-arm/libsrc/arm_shared_memory_system.c ",
+		"file": "shared_mem_tool.c"
+	},
+	{
+		"directory": "libsrc/",
+		"command": "/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_greyscale.o  libsrc/greyscale.c",
+		"file": "greyscale.c"
+	},
+	{
+		"directory": "libsrc/",
+		"command": "/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_sobel.o  libsrc/sobel.c",
+		"file": "sobel.c"
+	},
+	{
+		"directory": "libsrc/",
+		"command": "/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_overlay.o  libsrc/overlay.c",
+		"file": "overlay.c"
+	},
+	{
+		"directory": "libsrc/",
+		"command": "/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_scale.o  libsrc/scale.c",
+		"file": "scale.c"
+	},
+	{
+		"directory": "libsrc/",
+		"command": "/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_convolution.o  libsrc/convolution.c",
+		"file": "convolution.c"
+	},
+	{
+		"directory": "libsrc/",
+		"command": "/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_median.o  libsrc/median.c",
+		"file": "median.c"
+	},
+	{
+		"directory": "libsrc/",
+		"command": "/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_mymutex.o  libsrc/mymutex.c",
+		"file": "mymutex.c"
+	},
+	{
+		"directory": "libsrc/",
+		"command": "/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_platform.o  libsrc/platform.c",
+		"file": "platform.c"
+	},
+	{
+		"directory": "libsrc/",
+		"command": "/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_xil_printf.o  libsrc/xil_printf.c",
+		"file": "xil_printf.c"
+	},
+	{
+		"directory": "libsrc/",
+		"command": "/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_vep_malloc.o  libsrc/vep_malloc.c",
+		"file": "vep_malloc.c"
+	},
+	{
+		"directory": "libsrc/",
+		"command": "/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles  -I../bsp_tile0_mb/tile0_mb/include/ -I../tiles -Iinclude/ -I../../vep_0/libbsp/include -I../../vep_0/libfifo-riscv/include -I../../vep_0/tiles -I../../vep_0/libmutex-riscv/include -I../../vep_0/tiles -Iinclude -c -o libsrc/tile0_mb_output.o  libsrc/output.c",
+		"file": "output.c"
+	},
+	{
+		"directory": "libsrc/",
+		"command": "cc -DARM -I..//libbsp/include/ -I..//tiles -Iinclude/ -O2   -c -o libsrc/mutex.o libsrc/mutex.c",
+		"file": "mutex.c"
+	},
+	{
+		"directory": "",
+		"command": "/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../libimage/include -I../libmymutex/include -I../shared_memories -I../shared -I../../vep_0/tiles -DVEP_ID=1 -DTILE_ID=2 -DPARTITION_ID=1 -I../../vep_0/libbsp/include/ -I../../vep_0/libchannel/include/ -I../../vep_0/libfifo-riscv/include/ -I../../vep_0/libmutex-riscv/include/ -MMD -MP main.c -c -o main.o",
+		"file": "main.c"
+	},
+	{
+		"directory": "../shared_memories/",
+		"command": "/opt/riscv/bin/riscv32-unknown-elf-gcc -march=rv32imc -mabi=ilp32 -O2 -g3 -static --specs=nano.specs -mcmodel=medany -ffunction-sections -fdata-sections -fvisibility=hidden -nostartfiles   -I../libimage/include -I../libmymutex/include -I../shared_memories -I../shared -I../../vep_0/tiles -DVEP_ID=1 -DTILE_ID=2 -DPARTITION_ID=1 -I../../vep_0/libbsp/include/ -I../../vep_0/libchannel/include/ -I../../vep_0/libfifo-riscv/include/ -I../../vep_0/libmutex-riscv/include/ -Wl,-T -Wl,lscript.ld -o out.elf main.o ../shared_memories/vep_shared_memory_regions.c ../shared_memories/vep_memory_map.c \",
+		"file": "vep_shared_memory_regions.c"
+	},
+	{
+		"directory": "",
+		"command": "gcc -Wall -Wextra -O2 -g3 -I.  -DARM -DVEP_ID=1  -I../../vep_0/libbsp/include -I../../vep_0/libchannel/include -I../../vep_0/libarmshared-arm/include -I../../vep_0/libfifo-arm/include -I../../vep_0/libmutex-arm/include -I../shared_memories -I../shared arm_img_proc.c -c -o arm_img_proc.o",
+		"file": "arm_img_proc.c"
+	},
+	{
+		"directory": "",
+		"command": "gcc -Wall -Wextra -O2 -g3 -I.  -DARM -DVEP_ID=1  -I../../vep_0/libbsp/include -I../../vep_0/libchannel/include -I../../vep_0/libarmshared-arm/include -I../../vep_0/libfifo-arm/include -I../../vep_0/libmutex-arm/include -I../shared_memories -I../shared readbmp.c -c -o readbmp.o",
+		"file": "readbmp.c"
+	},
+	{
+		"directory": "",
+		"command": "gcc -Wall -Wextra -O2 -g3 -I.  -DARM -DVEP_ID=1  -I../../vep_0/libbsp/include -I../../vep_0/libchannel/include -I../../vep_0/libarmshared-arm/include -I../../vep_0/libfifo-arm/include -I../../vep_0/libmutex-arm/include -I../shared_memories -I../shared writebmp.c -c -o writebmp.o",
+		"file": "writebmp.c"
+	},
+	{
+		"directory": "../../vep_0/libbsp/libsrc/",
+		"command": "gcc -Wall -Wextra -O2 -g3 -I.  -DARM -DVEP_ID=1  -I../../vep_0/libbsp/include -I../../vep_0/libchannel/include -I../../vep_0/libarmshared-arm/include -I../../vep_0/libfifo-arm/include -I../../vep_0/libmutex-arm/include -I../shared_memories -I../shared -o arm_img_proc arm_img_proc.o readbmp.o writebmp.o -L../../vep_0/libchannel/lib -L../../vep_0/libfifo-arm/lib -L../../vep_0/libmutex-arm/lib -lchannel-arm -lfifo-arm -lmutex-arm  ../../vep_0/libbsp/libsrc/platform.c ../../vep_0/libarmshared-arm/libsrc/arm_shared_memory_system.c ../../vep_0/libarmshared-arm/libsrc/arm_shared_memory.c ../../vep_0/libfifo-arm/lib/libfifo-arm.a ../../vep_0/libmutex-arm/lib/libmutex-arm.a ../shared_memories/vep_shared_memory_regions.c ../shared_memories/vep_memory_map.c",
+		"file": "platform.c"
+	}
+]

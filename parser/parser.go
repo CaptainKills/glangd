@@ -9,9 +9,11 @@ import (
 	regex "github.com/CaptainKills/glangd/regex"
 )
 
-func ParseStdin(stdin []string, debug bool) []cmd.CompileCommand {
+func ParseStdin(debug bool) []cmd.CompileCommand {
 	var commands []cmd.CompileCommand
 	var foundPaths []string
+
+	stdin := file.ReadStdin()
 
 	for _, line := range stdin {
 		cmd := parseLine(line)
@@ -48,11 +50,11 @@ func ParseStdin(stdin []string, debug bool) []cmd.CompileCommand {
 	return commands
 }
 
-func ParseFile(f string, debug bool) []cmd.CompileCommand {
+func ParseFile(filePath string, debug bool) []cmd.CompileCommand {
 	var commands []cmd.CompileCommand
 	var foundPaths []string
 
-	lines := file.ReadFile(f)
+	lines := file.ReadFile(filePath)
 
 	for _, line := range lines {
 		cmd := parseLine(line)

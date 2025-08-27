@@ -2,11 +2,24 @@ package file
 
 import (
 	"bufio"
+	"io"
 	"log"
 	"os"
+	"strings"
 
 	cmd "github.com/CaptainKills/glangd/cmd"
 )
+
+func ReadStdin() []string {
+	data, err := io.ReadAll(os.Stdin)
+	if err != nil {
+		log.Fatalf("Could not read from stdin! %q\n", err)
+	}
+
+	lines := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
+
+	return lines
+}
 
 func ReadFile(fileName string) []string {
 	inputFile, err := os.Open(fileName)
@@ -23,6 +36,10 @@ func ReadFile(fileName string) []string {
 	var lines []string
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
+	}
+
+	if len(lines) == 0 {
+		log.Fatalln("Could not read file since it is empty!")
 	}
 
 	return lines
