@@ -29,6 +29,7 @@ func main() {
 	fmt.Printf("Input Path: %s\n", inputPath)
 	fmt.Printf("Output Path: %s\n", outputPath)
 	fmt.Printf("Debug Enabled: %t\n", debugEnabled)
+	fmt.Println()
 
 	// Handle -o
 	if !strings.HasSuffix(outputPath, ".json") {
