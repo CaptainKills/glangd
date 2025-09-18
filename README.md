@@ -66,13 +66,19 @@ The generated output of glangd will look as follows as the `compile_commands.jso
 ```json
 [
 	{
-		"directory": "src/",
+		"directory": "/path/to/current/working/directory",
 		"command": "gcc -c -o build/main.o src/main.c -Wall -Wextra -Wformat -O3 -I inc/",
-		"file": "main.c"
+		"file": "src/main.c"
 	}
 ]
 ```
 
 Assuming you placed the `compile_commands.json` file in the correct directory, your clangd tooling should automatically pick up the file.
+By default, glangd will use the current working directory from which the program was executed as the 'Directory' field of the `compile_commands.json` file.
+In case you would like to overwrite this directory, you can use the `-w` flag:
+```bash
+make | glangd -w /home/danick/c/project-x/
+```
+
 In case of issues, please provide the input as a text/log file, and the corresponding debug output from glangd (and clangd).
 

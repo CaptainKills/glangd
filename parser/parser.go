@@ -9,26 +9,26 @@ import (
 	regex "github.com/CaptainKills/glangd/regex"
 )
 
-func ParseStdin(debug bool) []cmd.CompileCommand {
+func ParseStdin(pwd string, debug bool) []cmd.CompileCommand {
 	var commands []cmd.CompileCommand
-	var foundPaths []string
+	var foundFiles []string
 
 	stdin := file.ReadStdin()
 
 	for _, line := range stdin {
-		cmd := parseLine(line)
+		cmd := parseLine(pwd, line)
 
-		if strings.Compare(cmd.Compiler, "") != 0 && strings.Compare(cmd.Path, "") != 0 {
-			duplicatePath := false
+		if strings.Compare(cmd.Compiler, "") != 0 && strings.Compare(cmd.File, "") != 0 {
+			duplicateFile := false
 
-			for _, foundPath := range foundPaths {
-				if strings.Compare(foundPath, cmd.Path) == 0 {
-					duplicatePath = true
+			for _, foundFile := range foundFiles {
+				if strings.Compare(foundFile, cmd.File) == 0 {
+					duplicateFile = true
 					break
 				}
 			}
 
-			if duplicatePath {
+			if duplicateFile {
 				continue
 			}
 
@@ -36,40 +36,39 @@ func ParseStdin(debug bool) []cmd.CompileCommand {
 			if debug {
 				fmt.Println(line)
 				fmt.Printf("\t(Compiler) %s\n", cmd.Compiler)
-				fmt.Printf("\t(Path) %s\n", cmd.Path)
 				fmt.Printf("\t(Directory) %s\n", cmd.Directory)
 				fmt.Printf("\t(File) %s\n", cmd.File)
 			}
 
 			// Register Command & Record Path
 			commands = append(commands, cmd)
-			foundPaths = append(foundPaths, cmd.Path)
+			foundFiles = append(foundFiles, cmd.File)
 		}
 	}
 
 	return commands
 }
 
-func ParseFile(filePath string, debug bool) []cmd.CompileCommand {
+func ParseFile(pwd string, filePath string, debug bool) []cmd.CompileCommand {
 	var commands []cmd.CompileCommand
-	var foundPaths []string
+	var foundFiles []string
 
 	lines := file.ReadFile(filePath)
 
 	for _, line := range lines {
-		cmd := parseLine(line)
+		cmd := parseLine(pwd, line)
 
-		if strings.Compare(cmd.Compiler, "") != 0 && strings.Compare(cmd.Path, "") != 0 {
-			duplicatePath := false
+		if strings.Compare(cmd.Compiler, "") != 0 && strings.Compare(cmd.File, "") != 0 {
+			duplicateFile := false
 
-			for _, foundPath := range foundPaths {
-				if strings.Compare(foundPath, cmd.Path) == 0 {
-					duplicatePath = true
+			for _, foundFile := range foundFiles {
+				if strings.Compare(foundFile, cmd.File) == 0 {
+					duplicateFile = true
 					break
 				}
 			}
 
-			if duplicatePath {
+			if duplicateFile {
 				continue
 			}
 
@@ -77,33 +76,29 @@ func ParseFile(filePath string, debug bool) []cmd.CompileCommand {
 			if debug {
 				fmt.Println(line)
 				fmt.Printf("\t(Compiler) %s\n", cmd.Compiler)
-				fmt.Printf("\t(Path) %s\n", cmd.Path)
 				fmt.Printf("\t(Directory) %s\n", cmd.Directory)
 				fmt.Printf("\t(File) %s\n", cmd.File)
 			}
 
 			// Register Command & Record Path
 			commands = append(commands, cmd)
-			foundPaths = append(foundPaths, cmd.Path)
+			foundFiles = append(foundFiles, cmd.File)
 		}
 	}
 
 	return commands
 }
 
-func parseLine(line string) (c cmd.CompileCommand) {
+func parseLine(pwd string, line string) (c cmd.CompileCommand) {
 	var cmd cmd.CompileCommand
 
 	compiler := regex.CompilerRegex.FindString(line)
 	path := regex.PathRegex.FindString(line)
-	file := regex.FileRegex.FindString(line)
-	directory, _, _ := strings.Cut(path, file)
 
-	cmd.Directory = directory
+	cmd.Directory = pwd
 	cmd.Command = line
-	cmd.File = file
+	cmd.File = path
 	cmd.Compiler = compiler
-	cmd.Path = path
 
 	return cmd
 }

@@ -11,13 +11,13 @@ func TestCommandToJson(t *testing.T) {
 
 	cmd.Command = "gcc main.c"
 	cmd.Directory = "/home/programmer/project-x/"
-	cmd.File = "main.c"
+	cmd.File = "src/main.c"
 
 	got := cmd.ToJson()
 	want := `	{
 		"directory": "/home/programmer/project-x/",
 		"command": "gcc main.c",
-		"file": "main.c"
+		"file": "src/main.c"
 	}`
 
 	if got != want {

@@ -10,7 +10,6 @@ type CompileCommand struct {
 
 	// Additional Info
 	Compiler string
-	Path     string
 }
 
 func (c CompileCommand) ToJson() string {
