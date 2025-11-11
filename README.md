@@ -30,23 +30,46 @@ make | glangd
 ```
 
 In this way glangd will create a `compile_commands.json` in the current working directory.
-In case you want to read from a file, you can do this as follows:
+
+### Specify Compiler
+The default regular expression for finding compilers is `cc|gcc|clang|riscv32-unknown-elf-gcc`. However, if you use a custom compiler then you can overwrite this regular expression with the `-c` flag:
+
+```bash
+# Specify an exact compiler:
+make | glangd -c "gcc"
+# Specify a few compilers:
+make | glangd -c "gcc|clangd"
+```
+
+### Specify Input Directory
+In case you want to read from a specific file, you can do this as follows:
 
 ```bash
 make > make.log
 glangd -f make.log
 ```
 
+### Specify Output Directory
 This will prompt glangd to read the output of the `make` command via the make.log file
 and process the output directly. glangd also provides the option to output the processed contents to another file with the `-o` flag:
+
 ```bash
 make | glangd -o path/to/output.json
 ```
 
-
 Note that the specified output file needs to be a `.json` file.
 
+### Specify Working Directory
+By default, glangd will use the current working directory from which the program was executed as the 'Directory' field of the `compile_commands.json` file.
+In case you would like to overwrite this directory, you can use the `-w` flag:
+
+```bash
+make | glangd -w /home/danick/c/project-x/
+```
+
+### Glangd Debug Information
 In case you would like to see how glangd analyses your Makefile output, you can use the `-d` flag to enable debug mode:
+
 ```bash
 make | glangd -d
 
@@ -62,7 +85,9 @@ gcc -c -o build/main.o src/main.c -Wall -Wextra -Wformat -O3 -I inc/
         (File) main.c       # glangd found the source file
 ```
 
+### Glangd Generated Output
 The generated output of glangd will look as follows as the `compile_commands.json`:
+
 ```json
 [
 	{
@@ -73,20 +98,8 @@ The generated output of glangd will look as follows as the `compile_commands.jso
 ]
 ```
 
-The default regular expression for finding compilers is `cc|gcc|clang|riscv32-unknown-elf-gcc`. However, if you use a custom compiler then you can overwrite this regular expression with the `-c` flag:
-```bash
-# Specify an exact compiler:
-make | glangd -c "gcc"
-# Specify a few compilers:
-make | glangd -c "gcc|clangd"
-```
-
 Assuming you placed the `compile_commands.json` file in the correct directory, your clangd tooling should automatically pick up the file.
-By default, glangd will use the current working directory from which the program was executed as the 'Directory' field of the `compile_commands.json` file.
-In case you would like to overwrite this directory, you can use the `-w` flag:
-```bash
-make | glangd -w /home/danick/c/project-x/
-```
 
+# Issues
 In case of issues, please provide the input as a text/log file, and the corresponding debug output from glangd (and clangd).
 
