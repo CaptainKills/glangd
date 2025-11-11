@@ -73,6 +73,14 @@ The generated output of glangd will look as follows as the `compile_commands.jso
 ]
 ```
 
+The default regular expression for finding compilers is `cc|gcc|clang|riscv32-unknown-elf-gcc`. However, if you use a custom compiler then you can overwrite this regular expression with the `-c` flag:
+```bash
+# Specify an exact compiler:
+make | glangd -c "gcc"
+# Specify a few compilers:
+make | glangd -c "gcc|clangd"
+```
+
 Assuming you placed the `compile_commands.json` file in the correct directory, your clangd tooling should automatically pick up the file.
 By default, glangd will use the current working directory from which the program was executed as the 'Directory' field of the `compile_commands.json` file.
 In case you would like to overwrite this directory, you can use the `-w` flag:

@@ -18,10 +18,15 @@ var (
 	FileRegex     *regexp.Regexp
 )
 
-func InitRegex() {
+func InitRegex(usedCompiler string) {
 	var err error
 
-	CompilerRegex, err = regexp.Compile(compilerRegexExpr)
+	if usedCompiler == "" {
+		CompilerRegex, err = regexp.Compile(compilerRegexExpr)
+	} else {
+		CompilerRegex, err = regexp.Compile(usedCompiler)
+	}
+
 	if err != nil {
 		log.Fatalf("Could not compile 'compiler' regex! %q\n", err)
 	}

@@ -14,13 +14,12 @@ import (
 
 var (
 	debugEnabled bool
+	usedCompiler string
 	inputPath    string
 	outputPath   string
 )
 
 func main() {
-	regex.InitRegex()
-
 	// Project Working Directory
 	workingDirectory, err := os.Getwd()
 	if err != nil {
@@ -28,6 +27,7 @@ func main() {
 	}
 
 	// Program Flags
+	flag.StringVar(&usedCompiler, "c", "", "Specify compiler program")
 	flag.StringVar(&workingDirectory, "w", workingDirectory, "Overwrite current working directory")
 	flag.StringVar(&inputPath, "f", "", "Specify input file path")
 	flag.StringVar(&outputPath, "o", "compile_commands.json", "Specify output file path")
@@ -36,12 +36,16 @@ func main() {
 
 	// Handle -d
 	if debugEnabled {
+		fmt.Printf("Specified Compiler: %s\n", usedCompiler)
 		fmt.Printf("Working Directory: %s\n", workingDirectory)
 		fmt.Printf("Input Path: %s\n", inputPath)
 		fmt.Printf("Output Path: %s\n", outputPath)
 		fmt.Printf("Debug Enabled: %t\n", debugEnabled)
 		fmt.Println()
 	}
+
+	// Handle -c
+	regex.InitRegex(usedCompiler)
 
 	// Handle -o
 	if !strings.HasSuffix(outputPath, ".json") {
