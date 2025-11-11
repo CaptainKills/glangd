@@ -1,27 +1,27 @@
 [
 	{
-		"directory": "src/",
+		"directory": "/home/danick/go/glangd",
 		"command": "gcc -c -o build/cpu.o src/cpu.c -Wall -Wextra -Wformat -O3 -I inc/",
-		"file": "cpu.c"
+		"file": "src/cpu.c"
 	},
 	{
-		"directory": "src/",
+		"directory": "/home/danick/go/glangd",
 		"command": "gcc -c -o build/debug.o src/debug.c -Wall -Wextra -Wformat -O3 -I inc/",
-		"file": "debug.c"
+		"file": "src/debug.c"
 	},
 	{
-		"directory": "src/",
+		"directory": "/home/danick/go/glangd",
 		"command": "gcc -c -o build/instruction.o src/instruction.c -Wall -Wextra -Wformat -O3 -I inc/",
-		"file": "instruction.c"
+		"file": "src/instruction.c"
 	},
 	{
-		"directory": "src/",
+		"directory": "/home/danick/go/glangd",
 		"command": "gcc -c -o build/main.o src/main.c -Wall -Wextra -Wformat -O3 -I inc/",
-		"file": "main.c"
+		"file": "src/main.c"
 	},
 	{
-		"directory": "src/",
+		"directory": "/home/danick/go/glangd",
 		"command": "gcc -c -o build/memory.o src/memory.c -Wall -Wextra -Wformat -O3 -I inc/",
-		"file": "memory.c"
+		"file": "src/memory.c"
 	}
 ]
