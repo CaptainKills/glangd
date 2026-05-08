@@ -1,6 +1,8 @@
 package cmd
 
-import "strings"
+import (
+	"strings"
+)
 
 type CompileCommand struct {
 	// JSON Information
@@ -30,6 +32,23 @@ func (c CompileCommand) ToJson() string {
 	builder.WriteString("\"\n")
 
 	builder.WriteString("\t}")
+
+	return builder.String()
+}
+
+func (c CompileCommand) ToTxt() string {
+	var builder strings.Builder
+
+	flags := strings.Split(c.Command, " ")
+
+	for index := range flags {
+		flag := flags[index]
+
+		if !strings.Contains(flag, ".c") || !strings.Contains(flag, ".o") {
+			builder.WriteString(flag)
+			builder.WriteString("\n")
+		}
+	}
 
 	return builder.String()
 }

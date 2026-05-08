@@ -45,7 +45,15 @@ func ReadFile(fileName string) []string {
 	return lines
 }
 
-func WriteFile(fileName string, commands []cmd.CompileCommand) {
+func WriteFile(fileName string, commands []cmd.CompileCommand, singleMode bool) {
+	if singleMode {
+		writeTxtFile(fileName, commands)
+	} else {
+		writeJsonFile(fileName, commands)
+	}
+}
+
+func writeJsonFile(fileName string, commands []cmd.CompileCommand) {
 	outputFile, err := os.Create(fileName)
 	if err != nil {
 		log.Fatalf("Could not create file! %q\n", err)
@@ -62,4 +70,14 @@ func WriteFile(fileName string, commands []cmd.CompileCommand) {
 	}
 
 	outputFile.WriteString("\n]\n")
+}
+
+func writeTxtFile(fileName string, commands []cmd.CompileCommand) {
+	outputFile, err := os.Create(fileName)
+	if err != nil {
+		log.Fatalf("Could not create file! %q\n", err)
+	}
+	defer outputFile.Close()
+
+	outputFile.WriteString(commands[0].ToTxt())
 }
